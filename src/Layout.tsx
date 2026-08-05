@@ -58,7 +58,7 @@ a{
   box-sizing: border-box;
 }
 body{
-  font-family: "Roboto Condensed", "Times New Roman";
+  font-family: /* sans-serif */ "Roboto Condensed";
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;

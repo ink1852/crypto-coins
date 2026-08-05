@@ -61,6 +61,13 @@ interface CoinState {
   name: string;
   symbol: string;
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const Title = styled.h1`
   font-size: 50px;
   margin-bottom: 50px;
@@ -69,7 +76,7 @@ const InfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 500px;
+  width: 100%;
   padding: 16px 32px;
   background-color: #242829;
   border-radius: 16px;
@@ -89,16 +96,16 @@ const Info = styled.div<InfoProp>`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: ${(prop) => (prop.$content ? "32px" : "16px")};
+  font-size: ${(prop) => (prop.$content ? "24px" : "16px")};
+  font-weight: ${(prop) => (prop.$content ? 500 : 300)};
   padding: ${(prop) => (prop.$content ? "16px" : 0)};
   padding-bottom: 0;
-  /* background-color: #4b4b4b; */
+  text-transform: uppercase;
 `;
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const Description = styled.div`
+  font-size: 18px;
+  margin: 24px 0;
 `;
 
 function Coin() {
@@ -132,16 +139,27 @@ function Coin() {
           <Title>{state?.name || "Loading..."}</Title>
           <InfoContainer>
             <InfoBox>
-              <Info>RANK:</Info>
+              <Info>rank:</Info>
               <Info $content>{info?.rank}</Info>
             </InfoBox>
             <InfoBox>
-              <Info>SYMBOL:</Info>
+              <Info>symbol:</Info>
               <Info $content>${info?.symbol}</Info>
             </InfoBox>
             <InfoBox>
-              <Info>OPEN_SOURCE:</Info>
-              <Info $content>{info?.open_source ? "YES" : "NO"}</Info>
+              <Info>open_source:</Info>
+              <Info $content>{info?.open_source ? "yes" : "no"}</Info>
+            </InfoBox>
+          </InfoContainer>
+          <Description>{info?.description}</Description>
+          <InfoContainer>
+            <InfoBox>
+              <Info>total supply:</Info>
+              <Info $content>{priceInfo?.total_supply}</Info>
+            </InfoBox>
+            <InfoBox>
+              <Info>max supply:</Info>
+              <Info $content>{priceInfo?.max_supply}</Info>
             </InfoBox>
           </InfoContainer>
         </Wrapper>
