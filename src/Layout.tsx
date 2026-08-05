@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Outlet } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import Header from "./components/Header";
 
 const GlobalStyle = createGlobalStyle`
   /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -64,11 +65,13 @@ body{
   background-color: ${(prop) => prop.theme.bgColor};
   color: ${(prop) => prop.theme.textColor};
 }
-
-
-
 `;
-
+const Container = styled.div`
+  padding: 0px 20px;
+  max-width: 600px;
+  min-width: 360px;
+  margin: 0 auto;
+`;
 function Layout() {
   return (
     <>
@@ -84,8 +87,11 @@ function Layout() {
           rel="stylesheet"
         />
       </Helmet>
-      <GlobalStyle />
-      <Outlet />
+      <Container>
+        <GlobalStyle />
+        <Header />
+        <Outlet />
+      </Container>
     </>
   );
 }

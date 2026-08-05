@@ -1,72 +1,77 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Loading from "./components/Loading";
 
-const Container = styled.div`
-  padding: 0px 20px;
-`;
-const Header = styled.header`
-  height: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const CoinsList = styled.ul``;
+const Img = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 8px;
+`;
 const Coin = styled.li`
-  background-color: white;
   color: ${(prop) => prop.theme.bgColor};
+  font-size: 18px;
+  transition: all 0.1s ease-in-out;
+`;
+const CoinWrapper = styled.div`
+  background-color: white;
   padding: 20px;
   margin-bottom: 16px;
   border-radius: 16px;
-`;
-const Title = styled.h1`
-  color: ${(prop) => prop.theme.accentColor};
-  font-size: 48px;
+  display: flex;
+  align-items: center;
+  &:hover {
+    ${Coin} {
+      color: ${(prop) => prop.theme.accentColor};
+      font-size: 20px;
+    }
+  }
 `;
 
-const coins = [
-  {
-    id: "btc-bitcoin",
-    name: "Bitcoin",
-    symbol: "BTC",
-    rank: 1,
-    is_new: false,
-    is_active: true,
-    type: "coin",
-  },
-  {
-    id: "eth-ethereum",
-    name: "Ethereum",
-    symbol: "ETH",
-    rank: 2,
-    is_new: false,
-    is_active: true,
-    type: "coin",
-  },
-  {
-    id: "hex-hex",
-    name: "HEX",
-    symbol: "HEX",
-    rank: 3,
-    is_new: false,
-    is_active: true,
-    type: "token",
-  },
-];
+interface Coins {
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  is_new: boolean;
+  is_active: boolean;
+  type: string;
+}
+
 function Coins() {
+  const [coins, setCoins] = useState<Coins[]>([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(`https://api.coinpaprika.com/v1/coins`);
+      const json = await response.json();
+      setCoins(json.slice(0, 100));
+      setLoading(false);
+    })();
+  }, []);
   return (
     <>
-      <Container>
-        <Header>
-          <Title>Coins</Title>
-        </Header>
+      {loading ? (
+        <Loading />
+      ) : (
         <CoinsList>
           {coins.map((coin) => (
-            <Link to={`/${coin.symbol}`} key={coin.id}>
-              <Coin>{coin.name} &rarr;</Coin>
+            <Link
+              to={`/${coin.id}`}
+              state={{ name: coin.name, symbol: coin.symbol }}
+              key={coin.id}
+            >
+              <CoinWrapper>
+                <Img
+                  src={`https://cdn-icons-png.flaticon.com/512/1138/1138485.png`}
+                />
+                <Coin>{coin.name} &rarr;</Coin>
+              </CoinWrapper>
             </Link>
           ))}
         </CoinsList>
-      </Container>
+      )}
     </>
   );
 }
