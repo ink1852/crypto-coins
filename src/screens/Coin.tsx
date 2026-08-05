@@ -73,22 +73,6 @@ const InfoContainer = styled.div`
   padding: 16px 32px;
   background-color: #242829;
   border-radius: 16px;
-  > div {
-    width: 33%;
-    /* background-color: #4d907a; */
-    &:nth-child(1) {
-      display: flex;
-      justify-content: start;
-    }
-    &:nth-child(2) {
-      display: flex;
-      justify-content: center;
-    }
-    &:nth-child(3) {
-      display: flex;
-      justify-content: end;
-    }
-  }
 `;
 const InfoBox = styled.div`
   display: flex;
@@ -147,24 +131,18 @@ function Coin() {
         <Wrapper>
           <Title>{state?.name || "Loading..."}</Title>
           <InfoContainer>
-            <div>
-              <InfoBox>
-                <Info>RANK:</Info>
-                <Info $content>{info?.rank}</Info>
-              </InfoBox>
-            </div>
-            <div>
-              <InfoBox>
-                <Info>SYMBOL:</Info>
-                <Info $content>${info?.symbol}</Info>
-              </InfoBox>
-            </div>
-            <div>
-              <InfoBox>
-                <Info>OPEN_SOURCE:</Info>
-                <Info $content>{info?.open_source ? "YES" : "NO"}</Info>
-              </InfoBox>
-            </div>
+            <InfoBox>
+              <Info>RANK:</Info>
+              <Info $content>{info?.rank}</Info>
+            </InfoBox>
+            <InfoBox>
+              <Info>SYMBOL:</Info>
+              <Info $content>${info?.symbol}</Info>
+            </InfoBox>
+            <InfoBox>
+              <Info>OPEN_SOURCE:</Info>
+              <Info $content>{info?.open_source ? "YES" : "NO"}</Info>
+            </InfoBox>
           </InfoContainer>
         </Wrapper>
       )}
