@@ -72,7 +72,7 @@ const Title = styled.h1`
   font-size: 50px;
   margin-bottom: 50px;
 `;
-const InfoContainer = styled.div`
+const OverView = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -80,32 +80,21 @@ const InfoContainer = styled.div`
   padding: 16px 32px;
   background-color: #242829;
   border-radius: 16px;
+  font-size: 24px;
 `;
-const InfoBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-interface InfoProp {
-  $content?: boolean;
-}
-const Info = styled.div<InfoProp>`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: ${(prop) => (prop.$content ? "24px" : "16px")};
-  font-weight: ${(prop) => (prop.$content ? 500 : 300)};
-  padding: ${(prop) => (prop.$content ? "16px" : 0)};
-  padding-bottom: 0;
-  text-transform: uppercase;
+const OverViewItem = styled(Wrapper)`
+  span {
+    text-transform: uppercase;
+  }
+  span:first-child {
+    margin-bottom: 8px;
+    font-weight: 300;
+    font-size: 14px;
+  }
 `;
 
 const Description = styled.div`
-  font-size: 18px;
-  margin: 24px 0;
+  margin: 20px 0;
 `;
 
 function Coin() {
@@ -137,31 +126,31 @@ function Coin() {
       ) : (
         <Wrapper>
           <Title>{state?.name || "Loading..."}</Title>
-          <InfoContainer>
-            <InfoBox>
-              <Info>rank:</Info>
-              <Info $content>{info?.rank}</Info>
-            </InfoBox>
-            <InfoBox>
-              <Info>symbol:</Info>
-              <Info $content>${info?.symbol}</Info>
-            </InfoBox>
-            <InfoBox>
-              <Info>open_source:</Info>
-              <Info $content>{info?.open_source ? "yes" : "no"}</Info>
-            </InfoBox>
-          </InfoContainer>
+          <OverView>
+            <OverViewItem>
+              <span>rank:</span>
+              <span>{info?.rank}</span>
+            </OverViewItem>
+            <OverViewItem>
+              <span>symbol:</span>
+              <span>${info?.symbol}</span>
+            </OverViewItem>
+            <OverViewItem>
+              <span>open_source:</span>
+              <span>{info?.open_source ? "yes" : "no"}</span>
+            </OverViewItem>
+          </OverView>
           <Description>{info?.description}</Description>
-          <InfoContainer>
-            <InfoBox>
-              <Info>total supply:</Info>
-              <Info $content>{priceInfo?.total_supply}</Info>
-            </InfoBox>
-            <InfoBox>
-              <Info>max supply:</Info>
-              <Info $content>{priceInfo?.max_supply}</Info>
-            </InfoBox>
-          </InfoContainer>
+          <OverView>
+            <OverViewItem>
+              <span>total supply:</span>
+              <span>{priceInfo?.total_supply}</span>
+            </OverViewItem>
+            <OverViewItem>
+              <span>max supply:</span>
+              <span>{priceInfo?.max_supply}</span>
+            </OverViewItem>
+          </OverView>
         </Wrapper>
       )}
     </>
