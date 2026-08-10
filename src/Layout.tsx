@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Outlet } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import Header from "./components/Header";
-
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 const GlobalStyle = createGlobalStyle`
   /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -53,12 +53,13 @@ table {
 
 a{
   text-decoration: none;
+  color: inherit;
 }
 *{
   box-sizing: border-box;
 }
 body{
-  font-family: /* sans-serif */ "Roboto Condensed";
+  font-family: "Roboto Condensed", sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
@@ -90,6 +91,7 @@ function Layout() {
       <Container>
         <GlobalStyle />
         <Header />
+        <ReactQueryDevtools initialIsOpen={true} />
         <Outlet />
       </Container>
     </>

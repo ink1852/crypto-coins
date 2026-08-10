@@ -5,7 +5,6 @@ const Wrapper = styled.div`
 `;
 const Loader = styled.div`
   /* HTML: <div class="loader"></div> */
-
   width: 100px;
   aspect-ratio: 1;
   border-radius: 50%;
