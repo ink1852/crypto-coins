@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Loading from "../components/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoins } from "../api";
+import { Helmet } from "react-helmet-async";
 
 const CoinsList = styled.ul``;
 const Img = styled.img`
@@ -50,22 +51,27 @@ function Coins() {
       {isLoading ? (
         <Loading />
       ) : (
-        <CoinsList>
-          {data.slice(0, 100).map((coin) => (
-            <Link
-              to={`/${coin.id}`}
-              state={{ name: coin.name, symbol: coin.symbol }}
-              key={coin.id}
-            >
-              <CoinWrapper>
-                <Img
-                  src={`https://cdn-icons-png.flaticon.com/512/1138/1138485.png`}
-                />
-                <Coin>{coin.name} &rarr;</Coin>
-              </CoinWrapper>
-            </Link>
-          ))}
-        </CoinsList>
+        <>
+          <Helmet>
+            <title>Coins</title>
+          </Helmet>
+          <CoinsList>
+            {data.slice(0, 100).map((coin) => (
+              <Link
+                to={`/${coin.id}`}
+                state={{ name: coin.name, symbol: coin.symbol }}
+                key={coin.id}
+              >
+                <CoinWrapper>
+                  <Img
+                    src={`https://cdn-icons-png.flaticon.com/512/1138/1138485.png`}
+                  />
+                  <Coin>{coin.name} &rarr;</Coin>
+                </CoinWrapper>
+              </Link>
+            ))}
+          </CoinsList>
+        </>
       )}
     </>
   );

@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   Link,
   Outlet,
@@ -9,39 +8,7 @@ import {
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { useQuery } from "@tanstack/react-query";
-
-interface PriceData {
-  id: string;
-  name: string;
-  symbol: string;
-  rank: number;
-  total_supply: number;
-  max_supply: number;
-  beta_value: number;
-  first_data_at: string;
-  last_updated: string;
-  quotes: {
-    USD: {
-      ath_date: string;
-      ath_price: number;
-      market_cap: number;
-      market_cap_change_24h: number;
-      percent_change_1h: number;
-      percent_change_1y: number;
-      percent_change_6h: number;
-      percent_change_7d: number;
-      percent_change_12h: number;
-      percent_change_15m: number;
-      percent_change_24h: number;
-      percent_change_30d: number;
-      percent_change_30m: number;
-      percent_from_price_ath: number;
-      price: number;
-      volume_24h: number;
-      volume_24h_change_24h: number;
-    };
-  };
-}
+import { Helmet } from "react-helmet-async";
 
 interface CoinState {
   name: string;
@@ -100,8 +67,9 @@ const Tab = styled.div<{ $isActive: boolean }>`
 `;
 
 function Coin() {
-  const { coinId } = useParams() as { coinId: string };
-  const { state } = useLocation() as { state: CoinState };
+  const { coinId } = useParams() as { coinId: string }; // coinId: string | undefined 라서 string으로 단언
+  const { state } = useLocation() as { state: CoinState }; // state: unknown이라서 CoinState로 단언
+
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
 
@@ -121,6 +89,15 @@ function Coin() {
         "Loading..."
       ) : (
         <>
+          <Helmet>
+            <title>
+              {state?.name
+                ? state?.name
+                : loading
+                  ? "Loading..."
+                  : infoData?.name}
+            </title>
+          </Helmet>
           <Title>
             {state?.name
               ? state?.name
@@ -131,39 +108,39 @@ function Coin() {
           </Title>
           <OverView>
             <OverViewItem>
-              <span>rank:</span>
+              <span>rank</span>
               <span>{infoData?.rank}</span>
             </OverViewItem>
             <OverViewItem>
-              <span>symbol:</span>
+              <span>symbol</span>
               <span>${infoData?.symbol}</span>
             </OverViewItem>
             <OverViewItem>
-              <span>open_source:</span>
-              <span>{infoData?.open_source ? "yes" : "no"}</span>
+              <span>Price</span>
+              <span>{tickersData?.quotes.USD.price.toFixed(6)}</span>
             </OverViewItem>
           </OverView>
           <Description>{infoData?.description}</Description>
           <OverView>
             <OverViewItem>
-              <span>total supply:</span>
+              <span>total supply</span>
               <span>{tickersData?.total_supply}</span>
             </OverViewItem>
             <OverViewItem>
-              <span>max supply:</span>
+              <span>max supply</span>
               <span>{tickersData?.max_supply}</span>
             </OverViewItem>
           </OverView>
           <Tabs>
-            <Link to={`price`}>
-              <Tab $isActive={priceMatch !== null}>Price</Tab>
-            </Link>
             <Link to={`chart`}>
               <Tab $isActive={chartMatch !== null}>Chart</Tab>
             </Link>
+            <Link to={`price`}>
+              <Tab $isActive={priceMatch !== null}>Price</Tab>
+            </Link>
           </Tabs>
 
-          <Outlet />
+          <Outlet context={{ coinId: coinId }} />
         </>
       )}
     </>

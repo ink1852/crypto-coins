@@ -25,6 +25,11 @@ const router = createBrowserRouter([
           {
             path: "chart",
             element: <Chart />,
+            errorElement: (
+              <>
+                <h1>데이터 갖고 오기 실패!</h1>
+              </>
+            ),
           },
         ],
       },
