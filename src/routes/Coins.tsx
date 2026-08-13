@@ -56,7 +56,7 @@ function Coins() {
             <title>Coins</title>
           </Helmet>
           <CoinsList>
-            {data.slice(0, 100).map((coin) => (
+            {data.slice(0, 30).map((coin) => (
               <Link
                 to={`/${coin.id}`}
                 state={{ name: coin.name, symbol: coin.symbol }}
