@@ -3,12 +3,14 @@ import {
   Outlet,
   useLocation,
   useMatch,
+  useNavigate,
   useParams,
 } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 
 interface CoinState {
   name: string;
@@ -26,7 +28,7 @@ const OverView = styled.div`
   align-items: center;
   width: 100%;
   padding: 16px 32px;
-  background-color: #242829;
+  background-color: ${(prop) => prop.theme.wrapperColor};
   border-radius: 16px;
   font-size: 24px;
   margin-bottom: 20px;
@@ -58,7 +60,7 @@ const Tabs = styled.div`
 `;
 const Tab = styled.div<{ $isActive: boolean }>`
   padding: 10px;
-  background-color: #242829;
+  background-color: ${(prop) => prop.theme.wrapperColor};
   border-radius: 12px;
   text-transform: uppercase;
   text-align: center;
@@ -83,6 +85,10 @@ function Coin() {
     queryFn: () => fetchCoinTickers(coinId),
   });
   const loading = infoLoading || tickersLoading;
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("price");
+  }, []);
   return (
     <>
       {loading ? (
@@ -117,7 +123,7 @@ function Coin() {
             </OverViewItem>
             <OverViewItem>
               <span>Price</span>
-              <span>{tickersData?.quotes.USD.price.toFixed(6)}</span>
+              <span>{tickersData?.quotes.USD.price.toFixed(4)}</span>
             </OverViewItem>
           </OverView>
           <Description>{infoData?.description}</Description>
@@ -132,11 +138,11 @@ function Coin() {
             </OverViewItem>
           </OverView>
           <Tabs>
-            <Link to={`chart`}>
-              <Tab $isActive={chartMatch !== null}>Chart</Tab>
-            </Link>
             <Link to={`price`}>
               <Tab $isActive={priceMatch !== null}>Price</Tab>
+            </Link>
+            <Link to={`chart`}>
+              <Tab $isActive={chartMatch !== null}>Chart</Tab>
             </Link>
           </Tabs>
 

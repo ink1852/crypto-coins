@@ -3,9 +3,6 @@ import { useOutletContext } from "react-router-dom";
 import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 
-interface IChartProps {
-  coinId: string;
-}
 interface Ihistorical {
   time_open: number;
   time_close: number;
@@ -18,13 +15,15 @@ interface Ihistorical {
 }
 
 function Chart() {
-  const { coinId } = useOutletContext<IChartProps>();
+  const { coinId } = useOutletContext<{ coinId: string }>();
   const { isLoading, data } = useQuery({
     queryKey: [`ohlcv: ${coinId}`],
     queryFn: () => fetchCoinHistory(coinId),
+    enabled: !!coinId,
+    retry: true,
   }) as { isLoading: boolean; data: Ihistorical[] }; // 1)어차피 data를 갖고 와야지 로딩이 끝나고 로딩이 끝나야 차트를 보여주니까 타입 단언하는게 더 간단하다.
 
-  /* const options =  */
+  /* 차트 설정 */
   const series = [
     {
       name: "Price",

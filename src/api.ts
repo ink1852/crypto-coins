@@ -68,7 +68,10 @@ export async function fetchCoinTickers(coinId: string): Promise<IPriceData> {
   return fetch(`${BASE_URL}/tickers/${coinId}`).then((res) => res.json());
 }
 export async function fetchCoinHistory(coinId: string) {
-  return await (
+  const response = await (
     await fetch(`https://ohlcv-api.nomadcoders.workers.dev/?coinId=${coinId}`)
   ).json();
+  console.log("가져오기");
+
+  return response;
 }
