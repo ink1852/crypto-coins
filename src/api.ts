@@ -68,10 +68,17 @@ export async function fetchCoinTickers(coinId: string): Promise<IPriceData> {
   return fetch(`${BASE_URL}/tickers/${coinId}`).then((res) => res.json());
 }
 export async function fetchCoinHistory(coinId: string) {
-  const response = await (
-    await fetch(`https://ohlcv-api.nomadcoders.workers.dev/?coinId=${coinId}`)
-  ).json();
+  const response = await fetch(
+    `https://ohlcv-api.nomadcoders.workers.dev/?coinId=${coinId}`,
+  );
   console.log("가져오기");
 
-  return response;
+  if (!response.ok) {
+    const error: Error | any = new Error(`HTTP Error: ${response.status}`);
+    error.status = response.status;
+    console.log("실패");
+    throw error;
+  }
+
+  return response.json();
 }

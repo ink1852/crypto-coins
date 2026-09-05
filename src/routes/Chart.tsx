@@ -20,7 +20,6 @@ function Chart() {
     queryKey: [`ohlcv: ${coinId}`],
     queryFn: () => fetchCoinHistory(coinId),
     enabled: !!coinId,
-    retry: true,
   }) as { isLoading: boolean; data: Ihistorical[] }; // 1)어차피 data를 갖고 와야지 로딩이 끝나고 로딩이 끝나야 차트를 보여주니까 타입 단언하는게 더 간단하다.
 
   /* 차트 설정 */

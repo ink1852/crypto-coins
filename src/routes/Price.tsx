@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useOutletContext } from "react-router-dom";
 import { fetchCoinTickers } from "../api";
 import styled from "styled-components";
-import { useState } from "react";
 
 const Wrapper = styled.div`
   * {
@@ -11,7 +10,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 18px;
 `;
 const InfoWrapper = styled.div`
   width: 100%;
@@ -38,7 +37,7 @@ const OverView = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 16px;
 `;
 
 const ChangeValue = styled.div<{ $status?: string }>`

@@ -1,8 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import { Outlet } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import Header from "./components/Header";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { theme } from "./styles/theme";
 const GlobalStyle = createGlobalStyle`
   /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -69,31 +70,33 @@ body{
 `;
 const Container = styled.div`
   padding: 0px 20px;
-  max-width: 600px;
+  max-width: 420px;
   min-width: 360px;
   margin: 0 auto;
 `;
 function Layout() {
   return (
     <>
-      <Helmet>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
-          rel="stylesheet"
-        />
-      </Helmet>
-      <Container>
-        <GlobalStyle />
-        <Header />
-        <ReactQueryDevtools initialIsOpen={true} />
-        <Outlet />
-      </Container>
+      <ThemeProvider theme={theme}>
+        <Helmet>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="anonymous"
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+          />
+        </Helmet>
+        <Container>
+          <GlobalStyle />
+          <Header />
+          <ReactQueryDevtools initialIsOpen={true} />
+          <Outlet />
+        </Container>
+      </ThemeProvider>
     </>
   );
 }
