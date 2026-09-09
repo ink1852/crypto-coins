@@ -4,6 +4,7 @@ import {
   useLocation,
   useMatch,
   useNavigate,
+  useOutletContext,
   useParams,
 } from "react-router-dom";
 import styled from "styled-components";
@@ -23,6 +24,7 @@ const Title = styled.h1`
   text-align: center;
 `;
 const OverView = styled.div`
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,6 +34,7 @@ const OverView = styled.div`
   border-radius: 16px;
   font-size: 24px;
   margin-bottom: 20px;
+  color: ${(prop) => prop.theme.textColor};
 `;
 const OverViewItem = styled.div`
   display: flex;
@@ -59,6 +62,7 @@ const Tabs = styled.div`
   margin-bottom: 20px;
 `;
 const Tab = styled.div<{ $isActive: boolean }>`
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.05);
   padding: 10px;
   background-color: ${(prop) => prop.theme.wrapperColor};
   border-radius: 12px;
@@ -67,8 +71,12 @@ const Tab = styled.div<{ $isActive: boolean }>`
   color: ${(prop) =>
     prop.$isActive ? prop.theme.accentColor : prop.theme.textColor};
 `;
-
+interface IToggleDark {
+  isDark: boolean;
+}
 function Coin() {
+  const { isDark } = useOutletContext<IToggleDark>();
+
   const { coinId } = useParams() as { coinId: string }; // coinId: string | undefined 라서 string으로 단언
   const { state } = useLocation() as { state: CoinState }; // state: unknown이라서 CoinState로 단언
 
@@ -146,7 +154,7 @@ function Coin() {
             </Link>
           </Tabs>
 
-          <Outlet context={{ coinId: coinId }} />
+          <Outlet context={{ coinId: coinId, isDark: isDark }} />
         </>
       )}
     </>

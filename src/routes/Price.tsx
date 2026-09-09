@@ -11,8 +11,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 18px;
+  padding-bottom: 60px;
 `;
 const InfoWrapper = styled.div`
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.05);
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -39,23 +41,22 @@ const OverView = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 `;
-
-const ChangeValue = styled.div<{ $status?: string }>`
-  display: flex;
-  height: inherit;
-  justify-content: center;
-  align-items: center;
-  font-size: 36px;
-  font-weight: 300;
-  color: ${(prop) => prop.$status};
-`;
 const OverViewItem = styled.div`
-  height: 100px;
-  padding: 12px;
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.05);
+  padding: 16px 12px;
   background-color: ${(prop) => prop.theme.wrapperColor};
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+const ChangeValue = styled.div<{ $status?: string }>`
+  display: flex;
+  margin-top: 12px;
+  justify-content: center;
+  align-items: end;
+  font-size: 36px;
+  font-weight: 300;
+  color: ${(prop) => prop.$status};
 `;
 function Price() {
   const { coinId } = useOutletContext<{ coinId: string }>();
@@ -64,8 +65,10 @@ function Price() {
     queryFn: () => fetchCoinTickers(coinId),
   });
   const percentInfos = [
+    { percent: Number(data?.quotes.USD.percent_change_15m), hour: "15분" },
     { percent: Number(data?.quotes.USD.percent_change_30m), hour: "30분" },
     { percent: Number(data?.quotes.USD.percent_change_1h), hour: "1시간" },
+    { percent: Number(data?.quotes.USD.percent_change_6h), hour: "6시간" },
     { percent: Number(data?.quotes.USD.percent_change_12h), hour: "12시간" },
     { percent: Number(data?.quotes.USD.percent_change_24h), hour: "24시간" },
   ];
@@ -99,7 +102,7 @@ function Price() {
                 info.percent < 0 ? "↘️" : info.percent < 0.001 ? "➡️" : "↗️";
               return (
                 <OverViewItem key={info.hour}>
-                  <span>{info.hour}전보다</span>
+                  <span>{info.hour} 전보다</span>
                   <ChangeValue $status={status}>
                     <span>{info.percent.toFixed(1)}%</span>
                     <span>{emoji}</span>
