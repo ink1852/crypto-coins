@@ -4,7 +4,8 @@ import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import Header from "./components/Header";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { darkTheme, lightTheme } from "./styles/theme";
-import { useState } from "react";
+import { useIsDark } from "./store";
+
 const GlobalStyle = createGlobalStyle`
   /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -96,10 +97,7 @@ const ToggleBtn = styled.button`
 `;
 
 function Layout() {
-  const [isDark, setIsDark] = useState(false);
-  const toggleDark = () => {
-    setIsDark((prev) => !prev);
-  };
+  const { isDark, toggleDark } = useIsDark();
   return (
     <>
       <Helmet>
@@ -117,11 +115,12 @@ function Layout() {
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <Container>
           <GlobalStyle />
-          <Header toggleDark={toggleDark} isDark={isDark} />
+          <Header />
           <ReactQueryDevtools initialIsOpen={true} />
           <ToggleBtn onClick={toggleDark}>
             {isDark ? (
               <svg
+                data-slot="icon"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -135,6 +134,7 @@ function Layout() {
               </svg>
             ) : (
               <svg
+                data-slot="icon"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +144,7 @@ function Layout() {
               </svg>
             )}
           </ToggleBtn>
-          <Outlet context={{ isDark }} />
+          <Outlet />
         </Container>
       </ThemeProvider>
     </>

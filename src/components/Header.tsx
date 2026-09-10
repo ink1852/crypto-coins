@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useIsDark } from "../store";
 
 const Wrapper = styled.header`
   height: 10vh;
@@ -32,11 +32,9 @@ const ToggleBtn = styled.button`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   }
 `;
-interface IToogleBtn {
-  toggleDark: () => void;
-  isDark: boolean;
-}
-function Header({ toggleDark, isDark }: IToogleBtn) {
+
+function Header() {
+  const { isDark, toggleDark } = useIsDark();
   return (
     <>
       <Wrapper>
@@ -46,6 +44,7 @@ function Header({ toggleDark, isDark }: IToogleBtn) {
         <ToggleBtn onClick={toggleDark}>
           {isDark ? (
             <svg
+              data-slot="icon"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -59,6 +58,7 @@ function Header({ toggleDark, isDark }: IToogleBtn) {
             </svg>
           ) : (
             <svg
+              data-slot="icon"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"

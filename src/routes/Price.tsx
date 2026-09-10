@@ -57,6 +57,9 @@ const ChangeValue = styled.div<{ $status?: string }>`
   font-size: 36px;
   font-weight: 300;
   color: ${(prop) => prop.$status};
+  span:first-child {
+    margin-right: 12px;
+  }
 `;
 function Price() {
   const { coinId } = useOutletContext<{ coinId: string }>();
@@ -98,14 +101,60 @@ function Price() {
                   : info.percent < 0.001
                     ? "gray"
                     : "green";
-              const emoji =
-                info.percent < 0 ? "↘️" : info.percent < 0.001 ? "➡️" : "↗️";
               return (
                 <OverViewItem key={info.hour}>
                   <span>{info.hour} 전보다</span>
                   <ChangeValue $status={status}>
                     <span>{info.percent.toFixed(1)}%</span>
-                    <span>{emoji}</span>
+                    {info.percent < 0 ? (
+                      <svg
+                        data-slot="icon"
+                        fill="none"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181"
+                        ></path>
+                      </svg>
+                    ) : info.percent < 0.001 ? (
+                      <svg
+                        data-slot="icon"
+                        fill="none"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                        ></path>
+                      </svg>
+                    ) : (
+                      <svg
+                        data-slot="icon"
+                        fill="none"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
+                        ></path>
+                      </svg>
+                    )}
                   </ChangeValue>
                 </OverViewItem>
               );

@@ -4,6 +4,7 @@ import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 import type { ApexOptions } from "apexcharts";
 import styled from "styled-components";
+import { useIsDark } from "../store";
 interface Ihistorical {
   time_open: number;
   time_close: number;
@@ -20,10 +21,10 @@ const ChartWrapper = styled.div`
 `;
 interface IToggleDark {
   coinId: string;
-  isDark: boolean;
 }
 function Chart() {
-  const { coinId, isDark } = useOutletContext<IToggleDark>();
+  const { isDark } = useIsDark();
+  const { coinId } = useOutletContext<IToggleDark>();
   const { isLoading, data } = useQuery({
     queryKey: [`ohlcv: ${coinId}`],
     queryFn: () => fetchCoinHistory(coinId),

@@ -75,7 +75,7 @@ interface IToggleDark {
   isDark: boolean;
 }
 function Coin() {
-  const { isDark } = useOutletContext<IToggleDark>();
+  /* const { isDark } = useOutletContext<IToggleDark>(); */
 
   const { coinId } = useParams() as { coinId: string }; // coinId: string | undefined 라서 string으로 단언
   const { state } = useLocation() as { state: CoinState }; // state: unknown이라서 CoinState로 단언
@@ -154,7 +154,7 @@ function Coin() {
             </Link>
           </Tabs>
 
-          <Outlet context={{ coinId: coinId, isDark: isDark }} />
+          <Outlet context={{ coinId: coinId }} />
         </>
       )}
     </>

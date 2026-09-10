@@ -1,4 +1,4 @@
-import { Link, useOutletContext } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Loading from "../components/Loading";
 import { useQuery } from "@tanstack/react-query";
