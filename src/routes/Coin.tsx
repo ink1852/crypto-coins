@@ -4,7 +4,6 @@ import {
   useLocation,
   useMatch,
   useNavigate,
-  useOutletContext,
   useParams,
 } from "react-router-dom";
 import styled from "styled-components";
@@ -71,9 +70,6 @@ const Tab = styled.div<{ $isActive: boolean }>`
   color: ${(prop) =>
     prop.$isActive ? prop.theme.accentColor : prop.theme.textColor};
 `;
-interface IToggleDark {
-  isDark: boolean;
-}
 function Coin() {
   /* const { isDark } = useOutletContext<IToggleDark>(); */
 
